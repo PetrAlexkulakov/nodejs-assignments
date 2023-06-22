@@ -13,7 +13,7 @@ export default class FileManager {
   start() {
     console.log(`Welcome to the File Manager, ${this.username}!`);
     this.printCurrentDirectory();
-    // this.waitForInput();
+    this.waitForInput();
   }
 
   stop() {
@@ -25,4 +25,38 @@ export default class FileManager {
     console.log(`You are currently in ${this.currentDirectory}`);
   }
 
+  async waitForInput() {
+    try {
+      const input = await this.getInput();
+      await this.executeCommand(input);
+    } catch (error) {
+      console.error('Operation failed:', error);
+    } finally {
+      this.waitForInput();
+    }
+  }
+
+  getInput() {
+    return new Promise((resolve) => {
+      process.stdout.write('> ');
+      process.stdin.once('data', (data) => {
+        resolve(data.toString().trim());
+      });
+    });
+  }
+
+  async executeCommand(input) {
+    const [command, ...args] = input.split(' ');
+
+    switch (command) {
+      case 'up':
+        this.navigateUp();
+        break;
+      case '.exit':
+        this.stop();
+        break;
+      default:
+        console.log('Invalid input');
+    }
+  }
 }
