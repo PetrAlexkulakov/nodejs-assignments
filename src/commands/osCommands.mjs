@@ -5,7 +5,7 @@ export const osCommands = async (args) => {
 
     switch (osCommand) {
       case '--EOL':
-        console.log(`EOL: ${EOL}`);
+        console.log(`EOL: ${JSON.stringify(EOL)}`);
         break;
       case '--cpus':
         const cpuDetails = cpus().map((cpu) => `${cpu.model} (${cpu.speed}GHz)`);

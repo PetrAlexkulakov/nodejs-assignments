@@ -37,6 +37,9 @@ export async function  executeCommand(input) {
       case 'os':
         await osCommands(args)
         break;
+      case 'hash':
+        await fileOperator.hash(args[0]);
+        break;
       case '.exit':
         FileManager.stop();
         break;
