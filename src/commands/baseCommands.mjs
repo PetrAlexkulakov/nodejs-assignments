@@ -1,7 +1,7 @@
 import FileManager from "../fileManager.mjs";
+import { osCommands } from './osCommands.mjs';
 import { navigator } from '../operstors/nwd.mjs';
 import { fileOperator } from '../operstors/basicOperation.mjs';
-import { osOperator } from '../operstors/osOperator.mjs';
 
 export async function  executeCommand(input) {
     const [command, ...args] = input.split(' ');
@@ -33,6 +33,9 @@ export async function  executeCommand(input) {
         break;
       case 'rm':
         await fileOperator.rm(args[0])
+        break;
+      case 'os':
+        await osCommands(args)
         break;
       case '.exit':
         FileManager.stop();
