@@ -20,8 +20,8 @@ export const fileOperator = {
     },
 
     rn : async (oldPath, newPath) => {
-        const oldFilePath = `${this.FileManager.currentDirectory}/${oldPath}`;
-        const newFilePath = `${this.FileManager.currentDirectory}/${newPath}`;
+        const oldFilePath = `${FileManager.currentDirectory}/${oldPath}`;
+        const newFilePath = `${FileManager.currentDirectory}/${newPath}`;
         await fsPromises.rename(oldFilePath, newFilePath);
     },
 }
