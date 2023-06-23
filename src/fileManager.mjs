@@ -3,7 +3,7 @@ import { pipeline } from 'stream';
 import { createHash } from 'crypto';
 import { brotliCompress, brotliDecompress } from 'zlib';
 import { EOL, cpus, homedir, userInfo, arch } from 'os';
-import { navigateUp, cd } from './nwd.mjs';
+import { navigator } from './nwd.mjs';
 
 export default class FileManager {
   constructor(username) {
@@ -51,10 +51,10 @@ export default class FileManager {
 
     switch (command) {
       case 'up':
-        this.currentDirectory = navigateUp(this.currentDirectory);
+        this.currentDirectory = navigator.navigateUp(this.currentDirectory);
         break;
       case 'cd':
-        this.currentDirectory = await cd(args[0], this.currentDirectory);
+        this.currentDirectory = await navigator.cd(args[0], this.currentDirectory);
         break;
       case '.exit':
         this.stop();
