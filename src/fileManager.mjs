@@ -65,6 +65,9 @@ export default class FileManager {
       case 'rn':
         await fileOperator.rn(args[0], args[1])
         break;
+      case 'cp':
+        await fileOperator.cp(args[0], args[1])
+        break;
       case '.exit':
         this.stop();
         break;

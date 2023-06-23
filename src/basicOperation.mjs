@@ -7,6 +7,18 @@ import path from 'path';
 import FileManager from './fileManager.mjs';
 
 export const fileOperator = {
+    copyStream : (source, destination) => {
+        return new Promise((resolve, reject) => {
+          pipeline(source, destination, (error) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve();
+            }
+          });
+        });
+    },
+
     cat : async (path) => {
         const filePath = `${FileManager.currentDirectory}/${path}`;
         const readStream = createReadStream(filePath);
@@ -24,4 +36,10 @@ export const fileOperator = {
         const newFilePath = `${FileManager.currentDirectory}/${newPath}`;
         await fsPromises.rename(oldFilePath, newFilePath);
     },
+
+    cp: async (sourcePath, destinationPath) => {
+        const sourceFilePath = `${FileManager.currentDirectory}/${sourcePath}`;
+        const destinationFilePath = `${FileManager.currentDirectory}/${destinationPath}`;
+        await fileOperator.copyStream(createReadStream(sourceFilePath), createWriteStream(destinationFilePath));
+    }
 }
