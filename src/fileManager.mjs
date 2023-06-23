@@ -1,6 +1,5 @@
 import { homedir } from 'os';
-import { navigator } from './nwd.mjs';
-import { fileOperator } from './basicOperation.mjs';
+import { executeCommand } from './commands/baseCommands.mjs';
 
 export default class FileManager {
   static currentDirectory = homedir();
@@ -10,23 +9,23 @@ export default class FileManager {
 
   start() {
     console.log(`Welcome to the File Manager, ${this.username}!`);
-    this.printCurrentDirectory();
+    FileManager.printCurrentDirectory();
     this.waitForInput();
   }
 
-  stop() {
+  static stop() {
     console.log(`Thank you for using File Manager, ${this.username}, goodbye!`);
     process.exit(0);
   }
 
-  printCurrentDirectory() {
+  static printCurrentDirectory() {
     console.log(`\nYou are currently in ${FileManager.currentDirectory}`);
   }
 
   async waitForInput() {
     try {
       const input = await this.getInput();
-      await this.executeCommand(input);
+      await executeCommand(input);
     } catch (error) {
       console.error('Operation failed:', error);
     } finally {
@@ -41,45 +40,5 @@ export default class FileManager {
         resolve(data.toString().trim());
       });
     });
-  }
-
-  async executeCommand(input) {
-    const [command, ...args] = input.split(' ');
-
-    switch (command) {
-      case 'up':
-        navigator.navigateUp();
-        break;
-      case 'cd':
-        await navigator.cd(args[0]);
-        break;
-      case 'ls':
-        await navigator.ls()
-        break;
-      case 'cat':
-        await fileOperator.cat(args[0])
-        break;
-      case 'add':
-        await fileOperator.add(args[0])
-        break;
-      case 'rn':
-        await fileOperator.rn(args[0], args[1])
-        break;
-      case 'cp':
-        await fileOperator.cp(args[0], args[1])
-        break;
-      case 'mv':
-        await fileOperator.mv(args[0], args[1])
-        break;
-      case 'rm':
-        await fileOperator.rm(args[0])
-        break;
-      case '.exit':
-        this.stop();
-        break;
-      default:
-        console.log('Invalid input');
-    }
-    this.printCurrentDirectory();
   }
 }
