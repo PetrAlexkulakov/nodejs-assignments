@@ -11,5 +11,10 @@ export const fileOperator = {
         const readStream = createReadStream(filePath);
         readStream.pipe(process.stdout);
         await new Promise((resolve) => readStream.on('end', resolve));
+    },
+
+    add : async (currentDirectory, filename) => {
+        const filePath = `${currentDirectory}/${filename}`;
+        await fsPromises.writeFile(filePath, '');
     }
 }
