@@ -25,5 +25,18 @@ export const navigator = {
                 console.error('Invalid path')
                 return currentDirectory;
             });
-    }
+    },
+
+    ls : async (currentDirectory) => {
+        const files = await fsPromises.readdir(currentDirectory);
+        const fileDetails = [];
+    
+        for (const file of files) {
+          const stat = await fsPromises.lstat(`${currentDirectory}/${file}`);
+          const type = stat.isDirectory() ? 'Directory' : 'File';
+          fileDetails.push({Name: file, Type: type});
+        }
+    
+        console.table(fileDetails);
+    },
 }

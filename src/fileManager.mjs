@@ -56,6 +56,9 @@ export default class FileManager {
       case 'cd':
         this.currentDirectory = await navigator.cd(args[0], this.currentDirectory);
         break;
+      case 'ls':
+        await navigator.ls(this.currentDirectory)
+        break;
       case '.exit':
         this.stop();
         break;
