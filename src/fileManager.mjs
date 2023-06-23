@@ -71,6 +71,9 @@ export default class FileManager {
       case 'mv':
         await fileOperator.mv(args[0], args[1])
         break;
+      case 'rm':
+        await fileOperator.rm(args[0])
+        break;
       case '.exit':
         this.stop();
         break;
