@@ -1,9 +1,6 @@
-import { createReadStream, createWriteStream, promises as fsPromises } from 'fs';
-import { pipeline } from 'stream';
-import { createHash } from 'crypto';
-import { brotliCompress, brotliDecompress } from 'zlib';
-import { EOL, cpus, homedir, userInfo, arch } from 'os';
+import { homedir } from 'os';
 import { navigator } from './nwd.mjs';
+import { fileOperator } from './basicOperation.mjs';
 
 export default class FileManager {
   constructor(username) {
@@ -58,6 +55,9 @@ export default class FileManager {
         break;
       case 'ls':
         await navigator.ls(this.currentDirectory)
+        break;
+      case 'cat':
+        await fileOperator.cat(this.currentDirectory, args[0])
         break;
       case '.exit':
         this.stop();
