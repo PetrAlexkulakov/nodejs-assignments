@@ -4,36 +4,35 @@ import { createHash } from 'crypto';
 import { brotliCompress, brotliDecompress } from 'zlib';
 import { EOL, cpus, homedir, userInfo, arch } from 'os';
 import path from 'path';
+import FileManager from './fileManager.mjs';
 
 export const navigator = {
-    navigateUp : (currentDirectory) => {
-        const parentDirectory = currentDirectory.replace(/[\\\/][^\\\/]+$/, '');
-        if (parentDirectory !== currentDirectory && parentDirectory !== '') {
-            return parentDirectory;
+    navigateUp : () => {
+        const parentDirectory = FileManager.currentDirectory.replace(/[\\\/][^\\\/]+$/, '');
+        if (parentDirectory !== FileManager.currentDirectory && parentDirectory !== '') {
+            FileManager.currentDirectory = parentDirectory;
         }
-        return currentDirectory;
     },
 
-    cd : async (newPath, currentDirectory) => {
-        const absolutePath = path.join(currentDirectory, newPath)
+    cd : async (newPath) => {
+        const absolutePath = path.join(FileManager.currentDirectory, newPath)
         
         return await fsPromises.access(absolutePath)
             .then(() => {
-              return absolutePath;
+                FileManager.currentDirectory = absolutePath;
             })
             .catch(() => {
                 console.error('Invalid path')
-                return currentDirectory;
             });
     },
 
-    ls : async (currentDirectory) => {
-        const files = await fsPromises.readdir(currentDirectory);
+    ls : async () => {
+        const files = await fsPromises.readdir(FileManager.currentDirectory);
         const fileDetails = [];
         const directories = [];
 
         for (const file of files) {
-            const stat = await fsPromises.lstat(`${currentDirectory}/${file}`);
+            const stat = await fsPromises.lstat(`${FileManager.currentDirectory}/${file}`);
             const type = stat.isDirectory() ? 'Directory' : 'File';
 
             if (type === 'Directory') {

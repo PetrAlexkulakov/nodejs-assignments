@@ -3,9 +3,9 @@ import { navigator } from './nwd.mjs';
 import { fileOperator } from './basicOperation.mjs';
 
 export default class FileManager {
+  static currentDirectory = homedir();
   constructor(username) {
     this.username = username;
-    this.currentDirectory = homedir();
   }
 
   start() {
@@ -20,7 +20,7 @@ export default class FileManager {
   }
 
   printCurrentDirectory() {
-    console.log(`You are currently in ${this.currentDirectory}`);
+    console.log(`You are currently in ${FileManager.currentDirectory}`);
   }
 
   async waitForInput() {
@@ -48,19 +48,19 @@ export default class FileManager {
 
     switch (command) {
       case 'up':
-        this.currentDirectory = navigator.navigateUp(this.currentDirectory);
+        navigator.navigateUp();
         break;
       case 'cd':
-        this.currentDirectory = await navigator.cd(args[0], this.currentDirectory);
+        await navigator.cd(args[0]);
         break;
       case 'ls':
-        await navigator.ls(this.currentDirectory)
+        await navigator.ls()
         break;
       case 'cat':
-        await fileOperator.cat(this.currentDirectory, args[0])
+        await fileOperator.cat(args[0])
         break;
       case 'add':
-        await fileOperator.add(this.currentDirectory, args[0])
+        await fileOperator.add(args[0])
         break;
       case '.exit':
         this.stop();
