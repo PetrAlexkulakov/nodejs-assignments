@@ -41,5 +41,12 @@ export const fileOperator = {
         const sourceFilePath = `${FileManager.currentDirectory}/${sourcePath}`;
         const destinationFilePath = `${FileManager.currentDirectory}/${destinationPath}`;
         await fileOperator.copyStream(createReadStream(sourceFilePath), createWriteStream(destinationFilePath));
-    }
+    },
+
+    mv : async (sourcePath, destinationPath) => {
+        const sourceFilePath = `${FileManager.currentDirectory}/${sourcePath}`;
+        const destinationFilePath = `${FileManager.currentDirectory}/${destinationPath}`;
+        await fileOperator.copyStream(createReadStream(sourceFilePath), createWriteStream(destinationFilePath));
+        await fsPromises.unlink(sourceFilePath);
+    },
 }

@@ -20,7 +20,7 @@ export default class FileManager {
   }
 
   printCurrentDirectory() {
-    console.log(`You are currently in ${FileManager.currentDirectory}`);
+    console.log(`\nYou are currently in ${FileManager.currentDirectory}`);
   }
 
   async waitForInput() {
@@ -67,6 +67,9 @@ export default class FileManager {
         break;
       case 'cp':
         await fileOperator.cp(args[0], args[1])
+        break;
+      case 'mv':
+        await fileOperator.mv(args[0], args[1])
         break;
       case '.exit':
         this.stop();
