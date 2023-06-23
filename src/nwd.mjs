@@ -30,13 +30,22 @@ export const navigator = {
     ls : async (currentDirectory) => {
         const files = await fsPromises.readdir(currentDirectory);
         const fileDetails = [];
-    
+        const directories = [];
+
         for (const file of files) {
-          const stat = await fsPromises.lstat(`${currentDirectory}/${file}`);
-          const type = stat.isDirectory() ? 'Directory' : 'File';
-          fileDetails.push({Name: file, Type: type});
+            const stat = await fsPromises.lstat(`${currentDirectory}/${file}`);
+            const type = stat.isDirectory() ? 'Directory' : 'File';
+
+            if (type === 'Directory') {
+            directories.push({ Name: file, Type: type });
+            } else {
+            fileDetails.push({ Name: file, Type: type });
+            }
         }
-    
-        console.table(fileDetails);
+
+        directories.sort((a, b) => a.Name.localeCompare(b.Name));
+        fileDetails.sort((a, b) => a.Name.localeCompare(b.Name));
+
+        console.table([...directories, ...fileDetails]);
     },
 }
