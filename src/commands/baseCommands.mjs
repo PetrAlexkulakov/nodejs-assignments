@@ -2,7 +2,8 @@ import FileManager from "../fileManager.mjs";
 import { osCommands } from './osCommands.mjs';
 import { navigator } from '../operstors/nwd.mjs';
 import { fileOperator } from '../operstors/basicOperation.mjs';
-import { hashOperators } from '../operstors/hashOperators.mjs'
+import { hashOperators } from '../operstors/hashOperators.mjs';
+import { compressOperators } from "../operstors/compressOperators.mjs";
 
 export async function  executeCommand(input) {
     const [command, ...args] = input.split(' ');
@@ -40,6 +41,9 @@ export async function  executeCommand(input) {
         break;
       case 'hash':
         await hashOperators.hash(args[0]);
+        break;
+      case 'compress':
+        await compressOperators.compress(args[0], args[1])
         break;
       case '.exit':
         FileManager.stop();
