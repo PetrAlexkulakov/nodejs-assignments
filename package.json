@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-assignments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node src/index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetrAlexkulakov/nodejs-assignments.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PetrAlexkulakov/nodejs-assignments/issues"
+  },
+  "homepage": "https://github.com/PetrAlexkulakov/nodejs-assignments#readme"
+}
