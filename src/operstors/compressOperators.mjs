@@ -17,4 +17,16 @@ export const compressOperators = {
 
       readableStream.pipe(brotliStream).pipe(writableStream);
     },
+
+    decompress : async (sourcePath, destinationPath) => {
+      const sourceFilePath = `${FileManager.currentDirectory}/${sourcePath}`;
+      const destinationFilePath = `${FileManager.currentDirectory}/${destinationPath}`;
+
+      const readableStream = createReadStream(sourceFilePath);
+      const writableStream = createWriteStream(destinationFilePath);
+      
+      const brotliStream = createBrotliDecompress();
+
+      readableStream.pipe(brotliStream).pipe(writableStream);
+    },
 }

@@ -45,6 +45,9 @@ export async function  executeCommand(input) {
       case 'compress':
         await compressOperators.compress(args[0], args[1])
         break;
+      case 'decompress':
+        await compressOperators.decompress(args[0], args[1])
+        break;
       case '.exit':
         FileManager.stop();
         break;
